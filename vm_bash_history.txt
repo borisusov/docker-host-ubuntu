@@ -1,0 +1,76 @@
+    1  openssl genrsa -aes256 -out ca-key.pem 4096
+    2  ll
+    3  rm -rf ca-key.pem 
+    4  mkdir serts
+    5  ll
+    6  cd serts
+    7  cd .. 
+    8  mv serts certs
+    9  ll
+   10  cd certs/
+   11  openssl genrsa -aes256 -out ca-key.pem 4096
+   12  openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem
+   13  ll
+   14  openssl genrsa -out server-key.pem 4096
+   15  ll
+   16  openssl req -subj "/CN=testvm" -sha256 -new -key server-key.pem -out server.csr
+   17  ll
+   18  echo subjectAltName = DNS:testvm,DNS:localhost,IP:127.0.0.1 >> extfile.cnf
+   19  ll
+   20  cat extfile.cnf 
+   21  echo extendedKeyUsage = serverAuth >> extfile.cnf
+   22  cat extfile.cnf 
+   23  openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem 
+   24  openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem \
+   25  openssl x509 -req -days 3650 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -extfile extfile.cnf
+   26  ll
+   27  echo  ~~~end of server part~~~
+   28  echo  #~~~end of server part~~~
+   29  openssl genrsa -out key.pem 4096
+   30  openssl req -subj '/CN=client' -new -key key.pem -out client.csr
+   31  echo extendedKeyUsage = clientAuth >> extfile.cnf
+   32  openssl x509 -req -days 3650 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert.pem -extfile extfile.cnf
+   33  ll
+   34  chmod -v 0400 ca-key.pem key.pem server-key.pem
+   35  dockerd --tlsverify --tlscacert=ca.pem --tlscert=server-cert.pem --tlskey=server-key.pem \
+   36  ll
+   37  vim /lib/systemd/system/docker.service 
+   38  systemctl restart-daemon
+   39  systemctl daemon-restart
+   40  systemctl 
+   41  systemctl --help
+   42  systemctl daemon-reload
+   43  systemctl restart docker
+   44  journalctl -xe
+   45  vim /lib/systemd/system/docker.service 
+   46  systemctl daemon-reload
+   47  systemctl restart docker
+   48  pwd
+   49  cd ..
+   50  ll
+   51  pwd
+   52  mv -v -r certs /vagrant/
+   53  mv -v  certs /vagrant/
+   54  systemctl restart docker
+   55  ps axfu 
+   56  ps axfuwww
+   57  ss -tupln
+   58  history
+   59  vim /lib/systemd/system/docker.service 
+   60  pwd
+   61  mc
+   62  apt install mc
+   63  mc
+   64  hostname
+   65  poweroff
+   66  boris2a
+   67  ll
+   68  pweroff
+   69  poweroff
+   70  ps -axfu
+   71  poweroff
+   72  ll
+   73  cd /vagrant/
+   74  ll
+   75  history
+   76  history >vm_bash_history.txt
